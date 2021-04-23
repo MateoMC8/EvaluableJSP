@@ -7,18 +7,15 @@ package Controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Random;
 
 /**
- *
- *  Integrantes: Mateo Marin Cuadros, yerlin arroyave
+ * Integrantes: Mateo Marin Cuadros, yerlin arroyave
+ * 
  */
 @WebServlet(name = "Controlador", urlPatterns = {"/Controlador"})
 public class Controlador extends HttpServlet {
@@ -61,24 +58,7 @@ public class Controlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       List<Integer> Numeros;
-        Numeros = new ArrayList<>();
-        Random r=new Random();
-        int suma=0;
-        
-        for(int i=0; i<=9; i++){
-            Numeros.add(r.nextInt(8)+1);
-        }
-        String a="";
-        for(int i=0; i<Numeros.size();i++){
-            suma+=Numeros.get(i);
-          
-        }
-        
-         request.setAttribute("suma", suma);
-       
-        request.getRequestDispatcher("mensaje.jsp").forward(request, response);
-        
+        processRequest(request, response);
     }
 
     /**
@@ -93,8 +73,12 @@ public class Controlador extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        
+       double cat1=Double.parseDouble(request.getParameter("cateto1"));
+       double cat2=Double.parseDouble(request.getParameter("cateto2"));
+       double hip=Math.sqrt(Math.pow(cat1, 2) + Math.pow(cat2, 2));
+       
+       request.setAttribute("numero", hip);
+        request.getRequestDispatcher("mensaje.jsp").forward(request, response);
     }
 
     /**
